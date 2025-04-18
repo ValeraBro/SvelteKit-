@@ -1,26 +1,8 @@
-import type { Handle } from '@sveltejs/kit';
-import * as auth from '$lib/server/auth.js';
-
-const handleAuth: Handle = async ({ event, resolve }) => {
-	const sessionToken = event.cookies.get(auth.sessionCookieName);
-
-	if (!sessionToken) {
-		event.locals.user = null;
-		event.locals.session = null;
-		return resolve(event);
+export const handle = async ({ event, resolve }) => {
+	// Заглушка для API-запросов при статической сборке
+	if (event.url.pathname.startsWith('/api')) {
+	  return new Response(null, { status: 404 });
 	}
-
-	const { session, user } = await auth.validateSessionToken(sessionToken);
-
-	if (session) {
-		auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
-	} else {
-		auth.deleteSessionTokenCookie(event);
-	}
-
-	event.locals.user = user;
-	event.locals.session = session;
+	
 	return resolve(event);
-};
-
-export const handle: Handle = handleAuth;
+  };

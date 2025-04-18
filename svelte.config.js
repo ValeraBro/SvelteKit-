@@ -1,23 +1,23 @@
-import { mdsvex } from 'mdsvex';
-import adapter from '@sveltejs/adapter-static'; // Изменено с adapter-auto
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import adapter from '@sveltejs/adapter-static';
+import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  preprocess: [vitePreprocess(), mdsvex()],
-  
   kit: {
     adapter: adapter({
-      pages: 'build',
-      assets: 'build',
-      fallback: '404.html' // Важно для SPA-роутинга
+      fallback: '404.html' // Для SPA-роутинга
     }),
-    paths: {
-      base: process.argv.includes('dev') ? '' : process.env.BASE_PATH // Для GitHub Pages
+    prerender: {
+      handleHttpError: ({ path, referrer, message }) => {
+        // Игнорируем ошибки, связанные с отсутствием БД
+        if (path.startsWith('/api') || message.includes('DATABASE_URL')) {
+          return;
+        }
+        throw new Error(message);
+      }
     }
   },
-
-  extensions: ['.svelte', '.svx']
+  preprocess: vitePreprocess()
 };
 
 export default config;
