@@ -1,0 +1,21 @@
+# SvelteKit и Node.js
+node_modules/
+.svelte-kit/
+/build
+/package
+
+# Системные файлы
+.DS_Store
+.env
+.env.*
+*.tmp
+*.log
+
+# IDE и редакторы
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Тестовые данные
+/coverage
