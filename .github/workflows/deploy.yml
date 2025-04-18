@@ -33,3 +33,6 @@ jobs:
           publish_dir: ./build
           publish_branch: gh-pages
           keep_files: true
+  env:
+  BASE_PATH: '/SvelteKit-'
+  NODE_ENV: production
