@@ -1,0 +1,10 @@
+{  
+    "theme": {
+    "dark": "Dark",
+    "light": "Light"
+  },
+    "header": {
+      "title": "Welcome ",
+      "subtitle": "Current theme: {theme}"
+    }
+  }

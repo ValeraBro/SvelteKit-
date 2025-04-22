@@ -2,7 +2,9 @@
 	import '../app.css';
     import { theme, toggleTheme } from '$lib/stores/theme';
     import { onMount } from 'svelte';
-    
+    import { lang, setLanguage } from '$lib/stores/lang';
+    import { t } from '$lib/i18n';
+
     let isDark = false;
     
     onMount(() => {
@@ -14,6 +16,33 @@
     });
 </script>
 
+ 
+<div class="language-container ">
+    <button class="lang-btn usa" on:click={() => setLanguage('en')}>
+      <div class="flag-stripes">
+        <div class="stripe red"></div>
+        <div class="stripe white"></div>
+        <div class="stripe red"></div>
+        <div class="stripe white"></div>
+        <div class="stripe red"></div>
+        <div class="stripe white"></div>
+        <div class="stripe red"></div>
+        <div class="canton">
+          <div class="star">★</div>
+        </div>
+      </div>
+      <span class="label">English</span>
+    </button>
+  
+    <button class="lang-btn russia" on:click={() => setLanguage('ru')}>
+      <div class="flag-tricolor">
+        <div class="stripe white"></div>
+        <div class="stripe blue"></div>
+        <div class="stripe red"></div>
+      </div>
+      <span class="label">  Русский</span>
+    </button>
+  </div>
  
 
 <div class="theme-container">
@@ -154,4 +183,119 @@
         background-color: #444;
         border-color: #555;
     }
+
+
+
+
+
+    
+
+   /* Базовые стили контейнера */
+  .language-container {
+    margin: 10px; /* Отступ со всех сторон */
+    position: relative;
+    display: inline-flex;
+    gap: 12px;
+    padding: 10px;
+    /* background: rgba(255,255,255,0); */
+    border-radius: 12px;
+    /* box-shadow: 0 4px 15px rgba(0,0,0,0.1); */
+    isolation: isolate; /* Важно: изолирует от других элементов */
+    z-index: 100;
+  }
+
+  /* Общие стили кнопок */
+  .lang-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow: hidden;
+  }
+
+  /* Стилизация флага США */
+  .lang-btn.usa {
+    background: #0a3161;
+    color: white;
+  }
+
+  .flag-stripes {
+    position: relative;
+    width: 24px;
+    height: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stripe {
+    height: 2px;
+  }
+  .stripe.red { background: #B22234; }
+  .stripe.white { background: white; }
+
+  .canton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 8px;
+    background: #0a3161;
+    display: grid;
+    place-items: center;
+  }
+  .star {
+    font-size: 6px;
+    color: white;
+    transform: translateY(-0.5px);
+  }
+
+  /* Стилизация флага России */
+  .lang-btn.russia {
+    background: #0039A6;
+    color: white;
+  }
+
+  .flag-tricolor {
+    width: 24px;
+    height: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .flag-tricolor .stripe {
+    flex: 1;
+  }
+  .flag-tricolor .white { background: white; }
+  .flag-tricolor .blue { background: #0039A6; }
+  .flag-tricolor .red { background: #D52B1E; }
+
+  /* Эффекты взаимодействия */
+  .lang-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  }
+
+  .lang-btn:active {
+    transform: translateY(0);
+  }
+
+   
+
+  /* Гарантия изоляции от других элементов */
+  .language-container::before {
+    margin: 10px; /* Отступ со всех сторон */
+
+    content: '';
+    position: relative;
+    inset: -5px;
+    /* background: rgba(0, 0, 0, 0.1); */
+    z-index: -1;
+    border-radius: 16px;
+    opacity: 0.9;
+  }
 </style>
