@@ -4,8 +4,15 @@
     import { onMount } from 'svelte';
     import { lang, setLanguage } from '$lib/stores/lang';
     import { t } from '$lib/i18n';
+    import Navbar from "$lib/components/Navbar.svelte";
+    import { page } from "$app/stores";
+
 
     let isDark = false;
+
+
+
+    
     
     onMount(() => {
         const unsubscribe = theme.subscribe($theme => {
@@ -16,7 +23,47 @@
     });
 </script>
 
+
  
+<Navbar />
+
+ <!-- Свичер вынесен в самое начало, вне основного контента -->
+<!-- <label class="theme-switch">
+  <input 
+      type="checkbox" 
+      bind:checked={isDark}
+      on:change={toggleTheme}
+      aria-label="Переключить тему"
+  >
+  <span class="slider">
+      <span class="icon sun">
+          <svg viewBox="0 0 24 24" width="16" height="16">
+              <circle cx="12" cy="12" r="5" fill="currentColor"/>
+              <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+      </span>
+      <span class="icon moon">
+          <svg viewBox="0 0 24 24" width="16" height="16">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor"/>
+          </svg>
+      </span>
+  </span>
+</label>
+
+  Основной контент  -->
+<div class="theme-container">
+  <slot />
+</div>  
+
+
+<!-- 
 <div class="language-container ">
     <button class="lang-btn usa" on:click={() => setLanguage('en')}>
       <div class="flag-stripes">
@@ -31,8 +78,7 @@
           <div class="star">★</div>
         </div>
       </div>
-      <span class="label">English</span>
-    </button>
+     </button>
   
     <button class="lang-btn russia" on:click={() => setLanguage('ru')}>
       <div class="flag-tricolor">
@@ -40,12 +86,11 @@
         <div class="stripe blue"></div>
         <div class="stripe red"></div>
       </div>
-      <span class="label">  Русский</span>
-    </button>
+     </button>
   </div>
+  -->
  
-
-<div class="theme-container">
+<!-- <div class="theme-container">
     <label class="theme-switch">
         <input 
             type="checkbox" 
@@ -74,9 +119,14 @@
             </span>
         </span>
     </label>
-    <slot />
+ 
+ </div>   -->
 
- </div>
+
+
+
+
+ 
 
 <style>
     .theme-container {
@@ -120,6 +170,7 @@
         opacity: 0;
         width: 0;
         height: 0;
+        
     }
 
     .slider {
@@ -192,11 +243,11 @@
 
    /* Базовые стили контейнера */
   .language-container {
-    margin: 10px; /* Отступ со всех сторон */
+    margin: 3px; /* Отступ со всех сторон */
     position: relative;
     display: inline-flex;
-    gap: 12px;
-    padding: 10px;
+    gap: 5px;
+    padding: 5px;
     /* background: rgba(255,255,255,0); */
     border-radius: 12px;
     /* box-shadow: 0 4px 15px rgba(0,0,0,0.1); */
